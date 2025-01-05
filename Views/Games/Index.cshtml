@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Game>
+@{
+    ViewData["Title"] = "Games";
+}
+
+
+<a class="btn btn-secondary btn-lg" asp-action="Create">
+    <i class="bi bi-plus-circle-dotted"></i>
+    Add Game
+</a>
+
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">No games!</h4>
+        <p class="mb-0">No games were added yet.</p>
+    </div>
+}
+else
+{
+    <div class=" mt-5">
+        <table class="mt-3 table table-bordered border-primary">
+            @foreach (var game in Model)
+            {
+                <tr class="border-success border-1">
+                    <td>
+                        <div class="d-flex">
+                            <div class="pe-4">
+                                <img src="@($"{FileSettings.ImagesPath}/{game.Cover}")" alt="@game.Name" style="max-width:90px" />
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <div>
+                                    <h4 class="text-light">@game.Name</h4>
+                                    <h5>@game.Category.Name</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <div class="">
+                            <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-info rounded rounded-3 me-2">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@game.Id" class="btn btn-danger rounded rounded-3">
+                                <i class="bi bi-trash3"></i>
+                            </a>
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </table>
+
+    </div>
+}

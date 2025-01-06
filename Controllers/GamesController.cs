@@ -82,7 +82,7 @@ namespace GameZone.Controllers
         [HttpPost]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(EditGameFormViewModel model)
+        public async Task<IActionResult> Edit(EditGameFormViewModel model)
         {
             model.Categories = _categoriesService.GetSelectList();
             model.Devices = _devicesService.GetSelectList();
@@ -97,10 +97,13 @@ namespace GameZone.Controllers
                 return BadRequest();
             return RedirectToAction(nameof(Index));
         }
-        [HttpDelete]
+        //[HttpDelete]
         public IActionResult Delete(int Id)
         {
-            return Ok();
+
+            var isDeleted = _gamesService.Delete(Id);
+
+            return isDeleted ? Ok() : BadRequest();
         }
     }
 }
